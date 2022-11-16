@@ -1,0 +1,5 @@
+django-redis
+sentry-sdk
+requests
+django
+responses
