@@ -60,7 +60,8 @@ class TestMobizonSmsService(unittest.TestCase):
 
         r.delete('keykey1')
 
-        result = mobizon_sms_service.check_limit(r_key="keykey1")
+        result = mobizon_sms_service.check_limit(counter_key="keykey1",
+                                                 first_sms_period_at_key='keykey1_first_request_time')
         self.assertEqual(result, False)
 
     @mock.patch('django.apps.apps.get_model')
@@ -70,7 +71,8 @@ class TestMobizonSmsService(unittest.TestCase):
         r.set('keykey2', 50)
         test_first_request_time = '2022-11-11 17:00:00'
         r.set('keykey2_first_request_time', test_first_request_time)
-        result = mobizon_sms_service.check_limit(r_key="keykey2")
+        result = mobizon_sms_service.check_limit(counter_key="keykey2",
+                                                 first_sms_period_at_key='keykey2_first_request_time')
         self.assertEqual(result, False)
 
     @mock.patch('django.apps.apps.get_model')
@@ -80,7 +82,8 @@ class TestMobizonSmsService(unittest.TestCase):
         r.set('keykey3', 50)
         test_first_request_time = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
         r.set('keykey3_first_request_time', test_first_request_time)
-        result = mobizon_sms_service.check_limit(r_key="keykey3")
+        result = mobizon_sms_service.check_limit(counter_key="keykey3",
+                                                 first_sms_period_at_key='keykey3_first_request_time')
         self.assertEqual(result, True)
 
 
